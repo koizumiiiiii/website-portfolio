@@ -29,7 +29,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       <div
         className="relative w-full overflow-hidden"
         style={{
-          height: "420px",
+          height: "300px",
           background: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})`,
         }}
       >

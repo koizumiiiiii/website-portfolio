@@ -325,7 +325,7 @@ export default function Certifications() {
           </motion.div>
 
           {/* ── Cert grid: side-by-side on sm+, stacked on mobile ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 max-w-3xl mx-auto">
             {CERTS.map((cert, i) => (
               <CertCard
                 key={cert.id}

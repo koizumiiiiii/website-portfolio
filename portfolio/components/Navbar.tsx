@@ -5,25 +5,26 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useThemeToggle } from "@/hooks/useThemeToggle";
 
 const NAV_LINKS = [
-  { href: "#home",     label: "Home" },
-  { href: "#about",    label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact",  label: "Contact" },
+  { href: "#home",            label: "Home" },
+  { href: "#about",           label: "About" },
+  { href: "#projects",        label: "Projects" },
+  { href: "#certifications",  label: "Certifications" },
+  { href: "#contact",         label: "Contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
-  const [activeSection, setActive]    = useState("home");
-  const { theme, toggle, mounted }    = useThemeToggle();
+  const [scrolled,      setScrolled]   = useState(false);
+  const [mobileOpen,    setMobileOpen] = useState(false);
+  const [activeSection, setActive]     = useState("home");
+  const { theme, toggle, mounted }     = useThemeToggle();
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 40);
 
-      // Active section detection
-      const sections = ["home", "about", "projects", "contact"];
-      for (const id of sections.reverse()) {
+      // Active section detection — keep in sync with NAV_LINKS
+      const sections = ["home", "about", "projects", "certifications", "contact"];
+      for (const id of [...sections].reverse()) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 120) {
           setActive(id);
@@ -111,7 +112,7 @@ export default function Navbar() {
                   transition={{ duration: 0.3 }}
                 >
                   {theme === "dark" ? (
-                    <svg className="w-4.5 h-4.5 w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <circle cx="12" cy="12" r="5" strokeWidth="2" />
                       <path strokeWidth="2" strokeLinecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
                     </svg>

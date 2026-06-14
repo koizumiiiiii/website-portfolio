@@ -46,7 +46,7 @@ export default function Projects() {
         </motion.div>
 
         {/* ── 2-column grid (1 col on mobile, 2 on sm+) ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
