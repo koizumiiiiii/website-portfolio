@@ -285,7 +285,7 @@ export default function Contact() {
                   rows={5}
                   value={form.message}
                   onChange={(e) => { setForm((f) => ({ ...f, message: e.target.value })); setErrors((er) => ({ ...er, message: undefined })); }}
-                  placeholder="Hi Dranreb, I'd love to..."
+                  placeholder="Hi James Oliver, I'd love to..."
                   className={`${inputClass(errors.message)} resize-none`}
                 />
                 {errors.message && <p className="text-xs text-red-500 dark:text-red-400">{errors.message}</p>}

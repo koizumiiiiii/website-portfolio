@@ -49,6 +49,36 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             <span className="text-xs text-slate-500 dark:text-slate-400">{metric.label}</span>
           </div>
         )}
+
+        {/* View Image Button - appears on hover */}
+        <motion.a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute inset-0 flex items-center justify-center gap-2 bg-brand-600/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer z-20"
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileHover={{ scale: 1 }}
+          animate={{ opacity: 0 }}
+          whileInView={{ opacity: 0 }}
+          onHoverStart={() => {}}
+        >
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ 
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+              delay: 0.05
+            }}
+            className="flex items-center gap-2 text-white font-medium"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path d="M2.5 12.5L7 8m0 0l4 4m-4-4v8a2 2 0 002 2h8a2 2 0 002-2v-4" />
+            </svg>
+            View Image
+          </motion.div>
+        </motion.a>
       </div>
 
       {/* Body */}
@@ -74,44 +104,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
           {description}
         </p>
-
-        {/* Links */}
-        <div className="flex items-center gap-3 pt-1">
-          <a
-            href={githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-            </svg>
-            View Code
-          </a>
-          {liveUrl && (
-            <>
-              <span className="text-slate-300 dark:text-slate-700">·</span>
-              <a
-                href={liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
-              >
-                Live Demo
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path d="M7 17L17 7M7 7h10v10" />
-                </svg>
-              </a>
-            </>
-          )}
-
-          {/* Arrow accent */}
-          <span className="ml-auto text-slate-300 dark:text-slate-700 group-hover:text-brand-400 dark:group-hover:text-brand-500 transition-colors">
-            <svg className="w-4 h-4 translate-x-0 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path d="M7 17L17 7M7 7h10v10" />
-            </svg>
-          </span>
-        </div>
       </div>
 
       {/* Glow border effect on hover (overlay pseudo) */}

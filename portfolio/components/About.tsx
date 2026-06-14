@@ -77,6 +77,28 @@ const SKILLS: { category: string; chips: string[] }[] = [
   },
 ];
 
+// ── Tech icons mapping ──
+const TECH_ICONS: { [key: string]: string } = {
+  "HTML": "🌐",
+  "CSS": "🎨",
+  "JavaScript": "⚡",
+  "TypeScript": "📘",
+  "React": "⚛️",
+  "Next.js": "▲",
+  "Tailwind CSS": "🌊",
+  "PHP": "🐘",
+  "Laravel": "🎭",
+  "Java": "☕",
+  "Python": "🐍",
+  "MySQL": "🗄️",
+  "Git": "📦",
+  "GitHub": "💻",
+  "VS Code": "📝",
+  "IntelliJ IDEA": "🔧",
+  "Figma": "🎯",
+  "Jupyter": "📊",
+};
+
 // ── Stagger variants ──
 const containerVariants = {
   hidden: {},
@@ -136,37 +158,45 @@ export default function About() {
             {/* ── Profile photo + name block ── */}
             <motion.div
               variants={itemVariants}
-              className="flex items-center gap-5"
+              className="flex flex-col items-center gap-6 text-center"
             >
-              {/* Circular avatar */}
+              {/* Box avatar with gradient border */}
               <motion.div
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.03, y: -4 }}
                 transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                className={[
-                  "relative flex-shrink-0",
-                  "w-[120px] h-[120px] rounded-full",
-                  // Layered ring: inner border + outer glow
-                  "ring-2 ring-brand-200 dark:ring-brand-800",
-                  "shadow-[0_0_0_4px_rgba(255,255,255,0.8),0_8px_32px_rgba(58,103,255,0.18)]",
-                  "dark:shadow-[0_0_0_4px_rgba(15,23,42,0.8),0_8px_32px_rgba(93,138,255,0.22)]",
-                  "overflow-hidden",
-                ].join(" ")}
+                className="relative flex-shrink-0"
               >
-                {/* REPLACE WITH YOUR ACTUAL PROFILE PHOTO URL */}
-                <Image
-                  src="/images/profile.jpg"
-                  alt="Dranreb Jay Arzadon – profile photo"
-                  fill
-                  sizes="120px"
-                  className="object-cover"
-                  priority
-                />
+                {/* Gradient border container */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-brand-500 via-brand-600 to-purple-600 dark:from-brand-400 dark:via-brand-500 dark:to-purple-500 opacity-100 blur-xl group-hover:opacity-100 transition-opacity duration-300" />
+                
+                {/* Main image box */}
+                <div
+                  className={[
+                    "relative flex-shrink-0",
+                    "w-[350px] h-[350px] rounded-3xl",
+                    "ring-2 ring-brand-200 dark:ring-brand-800",
+                    "shadow-[0_20px_50px_rgba(58,103,255,0.25)]",
+                    "dark:shadow-[0_20px_50px_rgba(93,138,255,0.2)]",
+                    "overflow-hidden",
+                    "border border-brand-300/30 dark:border-brand-600/30",
+                  ].join(" ")}
+                >
+                  {/* REPLACE WITH YOUR ACTUAL PROFILE PHOTO URL */}
+                  <Image
+                    src="/profile.jpg"
+                    alt="James Oliver Mendoza – profile photo"
+                    fill
+                    sizes="350px"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </motion.div>
 
-              {/* Name + status badge beside the photo */}
-              <div className="space-y-1.5 min-w-0">
-                <p className="font-display font-bold text-xl text-slate-900 dark:text-white leading-tight">
-                  Dranreb Jay Arzadon
+              {/* Name + status badge below the photo */}
+              <div className="space-y-3 w-full">
+                <p className="font-display font-bold text-3xl text-slate-900 dark:text-white leading-tight">
+                  James Oliver Mendoza
                 </p>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
                   CS Student · University of Mindanao
@@ -182,40 +212,58 @@ export default function About() {
             {/* Bio */}
             <motion.div variants={itemVariants} className="space-y-4">
               <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
-                I&apos;m a driven Computer Science student with a deep passion for software development
-                and problem-solving. I thrive on crafting full-stack applications that are both
-                technically robust and user-friendly — clean architecture meets thoughtful design.
+                I'm James Oliver Mendoza, a Computer Science student at the University of Mindanao. I'm passionate about{" "}
+                <span className="text-slate-900 dark:text-slate-200 font-medium">frontend development</span> and turning ideas into{" "}
+                <span className="text-brand-600 dark:text-brand-400 font-medium">clean, reliable full‑stack applications</span>.
               </p>
               <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
-                Beyond coding, I&apos;m enthusiastic about machine learning and network security —
-                fields where software has tangible, real-world impact. I believe in writing maintainable
-                code and continuously sharpening my skills through projects and collaboration.
+                I've worked with{" "}
+                <span className="text-slate-900 dark:text-slate-200 font-medium">modern JavaScript frameworks</span>, PHP backends, and database design. I've also explored machine learning in academic projects – but my main focus is writing{" "}
+                <span className="text-brand-600 dark:text-brand-400 font-medium">maintainable, well‑structured code</span> for the web. I believe the best software solves real problems and feels natural to use.
               </p>
             </motion.div>
 
-            {/* Stats grid */}
-            <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4">
-              <StatCard target={5}  suffix="+" label="Projects Built" enabled={inView} />
-              <StatCard target={10} suffix="+" label="Technologies"   enabled={inView} />
-              <StatCard isText textValue="CS" label="Major @ UM"      enabled={inView} />
-            </motion.div>
+            {/* Education Timeline */}
+            <motion.div variants={itemVariants} className="space-y-4">
+              <h3 className="text-sm font-mono font-semibold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500">
+                Education
+              </h3>
+              
+              {/* Education item 1 */}
+              <motion.div
+                className="flex items-start gap-4 p-4 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/50"
+              >
+                <div className="w-8 h-8 rounded-lg bg-brand-500/10 dark:bg-brand-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path d="M12 3L2 8v4h20V8l-10-5z" />
+                    <path d="M3 12h18v7c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-7z" />
+                    <line x1="12" y1="15" x2="12" y2="20" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Currently at</p>
+                  <p className="text-base font-semibold text-brand-700 dark:text-brand-300">BS Computer Science</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">University of Mindanao • 2022 – Present</p>
+                </div>
+              </motion.div>
 
-            {/* Timeline accent */}
-            <motion.div
-              variants={itemVariants}
-              className="flex items-start gap-4 p-4 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/50"
-            >
-              <div className="w-8 h-8 rounded-lg bg-brand-500/10 dark:bg-brand-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <svg className="w-4 h-4 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 6v6l4 2" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Currently at</p>
-                <p className="text-base font-semibold text-brand-700 dark:text-brand-300">University of Mindanao</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400">BS Computer Science • 2022 – Present</p>
-              </div>
+              {/* Education item 2 */}
+              <motion.div
+                className="flex items-start gap-4 p-4 rounded-xl bg-slate-100/40 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50"
+              >
+                <div className="w-8 h-8 rounded-lg bg-slate-500/10 dark:bg-slate-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <svg className="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path d="M12 3L2 8v4h20V8l-10-5z" />
+                    <path d="M3 12h18v7c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-7z" />
+                    <line x1="12" y1="15" x2="12" y2="20" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300">Senior High School</p>
+                  <p className="text-base font-semibold text-slate-900 dark:text-slate-200">Assumption College of Davao</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Completed</p>
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
