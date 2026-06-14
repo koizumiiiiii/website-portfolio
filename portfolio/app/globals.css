@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    --cursor-size: 8px;
+    --cursor-ring: 36px;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-body antialiased;
+    cursor: none;
+  }
+
+  ::selection {
+    @apply bg-brand-500/20 text-brand-700;
+  }
+
+  .dark ::selection {
+    @apply bg-brand-400/30 text-brand-200;
+  }
+
+  /* Hide default cursor everywhere when custom cursor is active */
+  a, button, [role="button"] {
+    cursor: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-500/40 rounded-full;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-brand-400/40;
+  }
+}
+
+@layer components {
+  /* Noise grain overlay */
+  .noise-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 160px;
+    animation: grain 0.4s steps(1) infinite;
+    mix-blend-mode: overlay;
+  }
+
+  /* Shimmer text */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      theme('colors.brand.400') 0%,
+      theme('colors.accent.400') 35%,
+      theme('colors.brand.300') 50%,
+      theme('colors.accent.400') 65%,
+      theme('colors.brand.400') 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+
+  /* Gradient text static */
+  .gradient-text {
+    background: linear-gradient(135deg, theme('colors.brand.400'), theme('colors.accent.500'), theme('colors.brand.300'));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Section label pill */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-mono font-medium tracking-[0.2em] uppercase;
+    @apply text-brand-500 dark:text-brand-400;
+    @apply bg-brand-50 dark:bg-brand-950/60 border border-brand-200/60 dark:border-brand-800/40;
+    @apply px-3 py-1.5 rounded-full mb-4;
+  }
+
+  /* Skill chip */
+  .skill-chip {
+    @apply inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium;
+    @apply bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300;
+    @apply border border-slate-200/80 dark:border-slate-700/60;
+    @apply transition-all duration-200;
+    @apply hover:bg-brand-50 dark:hover:bg-brand-950/60;
+    @apply hover:text-brand-600 dark:hover:text-brand-400;
+    @apply hover:border-brand-200 dark:hover:border-brand-800;
+  }
+
+  /* Glow border on hover for cards */
+  .project-card-hover {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(58,103,255,0.15)];
+    @apply dark:hover:shadow-[0_20px_60px_rgba(93,138,255,0.2)];
+    @apply hover:border-brand-300/60 dark:hover:border-brand-700/60;
+  }
+}
+
+@layer utilities {
+  .writing-vertical {
+    writing-mode: vertical-rl;
+  }
+}
