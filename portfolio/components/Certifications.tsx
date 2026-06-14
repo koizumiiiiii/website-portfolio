@@ -13,6 +13,7 @@ interface Cert {
   id: string;
   title: string;
   issuer: string;
+  dateCompleted: string;
   /** REPLACE WITH YOUR ACTUAL CERTIFICATION IMAGE URL */
   src: string;
 }
@@ -20,17 +21,17 @@ interface Cert {
 const CERTS: Cert[] = [
   {
     id: "cert-1",
-    title: "Certification Title 1",
-    issuer: "Issuing Organisation",
-    /* REPLACE WITH YOUR ACTUAL CERTIFICATION IMAGE URL */
-    src: "https://placehold.co/600x400?text=Cert+1",
+    title: "Database",
+    issuer: "Certification",
+    dateCompleted: "2025",
+    src: "/Images/Database_Certification.png",
   },
   {
     id: "cert-2",
-    title: "Certification Title 2",
-    issuer: "Issuing Organisation",
-    /* REPLACE WITH YOUR ACTUAL CERTIFICATION IMAGE URL */
-    src: "https://placehold.co/600x400?text=Cert+2",
+    title: "Network Security",
+    issuer: "Certification",
+    dateCompleted: "2026",
+    src: "/Images/NetworkSecurity_Certification.png",
   },
 ];
 
@@ -170,23 +171,26 @@ function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: 
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
 
-        {/* "Click to enlarge" overlay on hover */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/30 backdrop-blur-[2px]">
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-slate-100 text-xs font-semibold shadow-lg">
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-            </svg>
-            Click to enlarge
-          </div>
+        {/* "View Image" overlay on hover */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="text-white font-semibold text-sm">View Image</span>
         </div>
       </div>
 
       {/* Card footer */}
-      <div className="px-5 py-4 space-y-0.5">
-        <p className="font-display font-semibold text-sm text-slate-800 dark:text-slate-100 truncate">
-          {cert.title}
-        </p>
-        <p className="text-xs text-slate-500 dark:text-slate-400">{cert.issuer}</p>
+      <div className="px-5 py-4 space-y-2">
+        <div>
+          <p className="font-display font-semibold text-sm text-slate-800 dark:text-slate-100 truncate">
+            {cert.title}
+          </p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{cert.issuer}</p>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 pt-1 border-t border-slate-200 dark:border-slate-700/50">
+          <svg className="w-3.5 h-3.5 text-brand-500/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.39-.48-1.03-.48-1.42 0-.39.48-.39 1.26 0 1.74l2 2.42c.39.48 1.03.48 1.42 0l4.15-5.16c.39-.48.39-1.26 0-1.74-.39-.48-1.03-.48-1.42 0z" />
+          </svg>
+          Completed: {cert.dateCompleted}
+        </div>
       </div>
     </motion.div>
   );
