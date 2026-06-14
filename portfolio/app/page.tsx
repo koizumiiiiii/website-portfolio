@@ -3,10 +3,10 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
+import Certifications from "@/components/Certifications"; // ← ADD THIS
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
-// Client-only components
 const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
   ssr: false,
 });
@@ -19,13 +19,13 @@ export default function Home() {
     <>
       <CustomCursor />
       <ParticleCanvas />
-      {/* Noise grain overlay */}
       <div className="noise-overlay" aria-hidden="true" />
       <Navbar />
       <main>
         <Hero />
         <About />
         <Projects />
+        <Certifications /> {/* ← ADD THIS */}
         <Contact />
       </main>
       <Footer />

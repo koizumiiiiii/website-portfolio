@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import Image from "next/image";
 
 // ── Count-up hook ──
 function useCountUp(target: number, duration = 1400, enabled = false) {
@@ -82,8 +83,8 @@ const containerVariants = {
   visible: { transition: { staggerChildren: 0.07 } },
 };
 const itemVariants = {
-  hidden:   { opacity: 0, y: 20 },
-  visible:  { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  hidden:  { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function About() {
@@ -102,6 +103,7 @@ export default function About() {
       />
 
       <div ref={ref} className="relative z-10 max-w-6xl mx-auto px-6">
+
         {/* ── Heading ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -122,7 +124,7 @@ export default function About() {
         {/* ── Two columns ── */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
-          {/* Left: Bio + Stats */}
+          {/* Left: Profile photo + Bio + Stats */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
@@ -130,6 +132,54 @@ export default function About() {
             viewport={{ once: true, amount: 0.2 }}
             className="space-y-8"
           >
+
+            {/* ── Profile photo + name block ── */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center gap-5"
+            >
+              {/* Circular avatar */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                className={[
+                  "relative flex-shrink-0",
+                  "w-[120px] h-[120px] rounded-full",
+                  // Layered ring: inner border + outer glow
+                  "ring-2 ring-brand-200 dark:ring-brand-800",
+                  "shadow-[0_0_0_4px_rgba(255,255,255,0.8),0_8px_32px_rgba(58,103,255,0.18)]",
+                  "dark:shadow-[0_0_0_4px_rgba(15,23,42,0.8),0_8px_32px_rgba(93,138,255,0.22)]",
+                  "overflow-hidden",
+                ].join(" ")}
+              >
+                {/* REPLACE WITH YOUR ACTUAL PROFILE PHOTO URL */}
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Dranreb Jay Arzadon – profile photo"
+                  fill
+                  sizes="120px"
+                  className="object-cover"
+                  priority
+                />
+              </motion.div>
+
+              {/* Name + status badge beside the photo */}
+              <div className="space-y-1.5 min-w-0">
+                <p className="font-display font-bold text-xl text-slate-900 dark:text-white leading-tight">
+                  Dranreb Jay Arzadon
+                </p>
+                <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  CS Student · University of Mindanao
+                </p>
+                {/* Available for OJT pill */}
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium tracking-wide text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 border border-brand-200/60 dark:border-brand-800/40 px-2.5 py-1 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                  Available for OJT
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Bio */}
             <motion.div variants={itemVariants} className="space-y-4">
               <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed">
                 I&apos;m a driven Computer Science student with a deep passion for software development
@@ -145,9 +195,9 @@ export default function About() {
 
             {/* Stats grid */}
             <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4">
-              <StatCard target={5} suffix="+" label="Projects Built"   enabled={inView} />
-              <StatCard target={10} suffix="+" label="Technologies"     enabled={inView} />
-              <StatCard isText textValue="CS" label="Major @ UM"       enabled={inView} />
+              <StatCard target={5}  suffix="+" label="Projects Built" enabled={inView} />
+              <StatCard target={10} suffix="+" label="Technologies"   enabled={inView} />
+              <StatCard isText textValue="CS" label="Major @ UM"      enabled={inView} />
             </motion.div>
 
             {/* Timeline accent */}
@@ -183,7 +233,7 @@ export default function About() {
                 Tech Stack
               </span>
               <h3 className="font-display font-bold text-2xl sm:text-3xl text-slate-900 dark:text-white">
-                Skills & Tools
+                Skills &amp; Tools
               </h3>
             </motion.div>
 
