@@ -7,10 +7,9 @@ import dynamic from "next/dynamic";
 const ThreeHero = dynamic(() => import("./ThreeHero"), { ssr: false });
 
 const PHRASES = [
-  "Building web applications",
-  "Designing web interfaces",
+  "Building robust web apps",
   "Solving real problems",
-  "CS Student @ University of Mindanao",
+  "CS Student @ UM",
   "Open for OJT",
 ];
 
@@ -97,7 +96,12 @@ export default function Hero() {
             className="space-y-6 lg:self-center lg:translate-x-3 lg:max-w-[36rem] xl:max-w-[40rem]"
           >
             {/* Label */}
-           
+            <motion.div variants={itemVariants}>
+              <span className="section-label">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400 animate-pulse" />
+                Available for OJT
+              </span>
+            </motion.div>
 
             {/* Greeting + Name */}
             <motion.div variants={itemVariants} className="space-y-1">
@@ -117,12 +121,15 @@ export default function Hero() {
               <Typewriter />
             </motion.div>
 
-            {/* Bio */}
+            {/* Bio — all apostrophes escaped */}
             <motion.p
               variants={itemVariants}
               className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg"
             >
-              I'm a CS student passionate about frontend development – building responsive, user‑friendly interfaces and turning ideas into working code. I've also explored full‑stack apps and machine learning, and I'm always learning by doing. I'm looking for an OJT where I can{" "}
+              I&apos;m a CS student who loves turning ideas into code. I&apos;ve built a few{" "}
+              <span className="text-slate-900 dark:text-slate-200 font-medium">full&#8209;stack apps</span>,{" "}
+              started exploring machine learning, and always try to learn by doing. Outside
+              the laptop, I hike and play guitar. Right now I&apos;m looking for an OJT where I can{" "}
               <span className="text-brand-600 dark:text-brand-400 font-medium">contribute, learn from a team, and ship real features</span>.
             </motion.p>
 
@@ -152,7 +159,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-all duration-200 hover:-translate-y-0.5"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 0-2-2v-4" />
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
@@ -256,32 +263,32 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* OJT badge */}
+            {/* Year decoration */}
             <motion.div
-              initial={{ opacity: 0, x: 20, y: -10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ delay: 1, duration: 0.5 }}
-              aria-live="polite"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.1, duration: 0.5 }}
+              className="absolute -top-2 right-2 sm:-top-3 sm:right-3 px-3 py-1.5 rounded-full bg-brand-600/10 dark:bg-brand-400/10 border border-brand-200/50 dark:border-brand-800/50 text-xs font-mono font-medium text-brand-600 dark:text-brand-400 shadow-sm"
             >
-      
+              2026
             </motion.div>
           </motion.div>
 
         </div>
 
-        {/* Scroll indicator - positioned correctly */}
+        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.6 }}
-          className="mt-16 flex flex-col items-center gap-3"
+          className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none md:bottom-4"
         >
           <span className="text-xs text-slate-400 dark:text-slate-600 tracking-widest uppercase font-mono">Scroll</span>
-          <div className="w-6 h-9 rounded-full border-2 border-slate-300 dark:border-slate-700 flex justify-center pt-2">
+          <div className="w-5 h-8 rounded-full border border-slate-300 dark:border-slate-700 flex justify-center pt-1.5">
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-              className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400"
+              className="w-1 h-1.5 rounded-full bg-brand-500"
             />
           </div>
         </motion.div>
