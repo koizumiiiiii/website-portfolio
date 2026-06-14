@@ -1,4 +1,4 @@
-# Dranreb Jay Arzadon — Personal Portfolio
+# James Oliver Mendoza — Personal Portfolio
 
 Built with **Next.js 14 App Router · TypeScript · Tailwind CSS · Framer Motion · Three.js**
 
