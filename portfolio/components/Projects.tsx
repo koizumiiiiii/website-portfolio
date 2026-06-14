@@ -11,7 +11,7 @@ export default function Projects() {
       aria-label="Featured Projects"
       className="relative py-24 sm:py-32"
     >
-      {/* Subtle grid background */}
+      {/* Subtle grid background — matches the rest of the site */}
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04] pointer-events-none"
@@ -23,7 +23,7 @@ export default function Projects() {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        {/* Heading */}
+        {/* ── Section heading ─────────────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,22 +39,44 @@ export default function Projects() {
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-            A selection of projects I&apos;ve built — spanning web apps, machine learning
-            systems, and developer tools.
+            A selection of systems I&apos;ve designed and built — spanning property
+            management, cybersecurity, food-tech, and e-commerce.
           </p>
         </motion.div>
 
-        {/* Project grid — 5 cards: 3 top + 2 bottom centered */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.slice(0, 3).map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} />
-          ))}
+        {/*
+         * ── Project grid ────────────────────────────────────────────────────
+         *
+         * 4 projects:  2 × 2 on desktop  |  2 col on tablet  |  1 col on mobile
+         *
+         * The middle pair is nudged down slightly (mt-8) to break the perfect
+         * symmetry and add the same visual rhythm used in the original layout.
+        *)
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Top row — projects 1 & 2 */}
+          <ProjectCard project={projects[0]} index={0} />
+          <ProjectCard project={projects[1]} index={1} />
+
+          {/* Bottom row — projects 3 & 4, shifted down for visual asymmetry */}
+          <div className="sm:mt-8">
+            <ProjectCard project={projects[2]} index={2} />
+          </div>
+          <div className="sm:mt-8">
+            <ProjectCard project={projects[3]} index={3} />
+          </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 lg:max-w-[66%] lg:mx-auto">
-          {projects.slice(3).map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i + 3} />
-          ))}
-        </div>
+
+        {/* ── Subtle footer note (no GitHub CTA) ─────────────────────────── */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.45 }}
+          className="text-center mt-14 text-sm text-slate-400 dark:text-slate-500"
+        >
+          More projects are in progress — stay tuned.
+        </motion.p>
       </div>
     </section>
   );

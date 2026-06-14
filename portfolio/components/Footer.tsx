@@ -52,10 +52,7 @@ export default function Footer() {
           </div>
 
           {/* Built with */}
-          <p className="text-xs text-slate-400 dark:text-slate-600 font-mono">
-            Built with Next.js + Framer Motion
-          </p>
-
+        
         </div>
       </div>
 

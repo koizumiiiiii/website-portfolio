@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Project } from "@/data/projects";
 
@@ -8,9 +9,28 @@ interface ProjectCardProps {
   index: number;
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const { title, description, tags, emoji, githubUrl, liveUrl, gradient, metric, year } = project;
+// ── Tag pill ──────────────────────────────────────────────────────────────────
+function Tag({ label }: { label: string }) {
+  return (
+    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[0.7rem] font-semibold tracking-wide bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700/60">
+      {label}
+    </span>
+  );
+}
 
+// ── Metric badge ──────────────────────────────────────────────────────────────
+function MetricBadge({ value, label }: { value: string; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-gradient-to-r from-brand-50 to-accent-50 dark:from-brand-950/60 dark:to-accent-950/60 text-brand-700 dark:text-brand-300 border border-brand-100 dark:border-brand-900/50">
+      <span className="text-brand-500 dark:text-brand-400">{value}</span>
+      <span className="font-medium text-slate-500 dark:text-slate-400">·</span>
+      <span className="font-medium text-slate-600 dark:text-slate-400">{label}</span>
+    </span>
+  );
+}
+
+// ── Main card ─────────────────────────────────────────────────────────────────
+export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 32 }}
@@ -21,93 +41,83 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         delay: index * 0.08,
         ease: [0.22, 1, 0.36, 1],
       }}
-      aria-label={title}
-      className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/60 overflow-hidden project-card-hover"
+      whileHover={{ y: -6, scale: 1.01 }}
+      className={[
+        "group flex flex-col h-full",
+        "rounded-2xl overflow-hidden",
+        "bg-white dark:bg-slate-900",
+        "border border-slate-200/80 dark:border-slate-800/60",
+        "shadow-[0_2px_12px_rgba(0,0,0,0.06)] dark:shadow-[0_2px_12px_rgba(0,0,0,0.3)]",
+        "hover:shadow-[0_20px_56px_rgba(37,99,235,0.13),0_6px_16px_rgba(0,0,0,0.07)]",
+        "dark:hover:shadow-[0_20px_56px_rgba(37,99,235,0.22),0_6px_16px_rgba(0,0,0,0.4)]",
+        "hover:border-brand-200/70 dark:hover:border-brand-800/70",
+        "transition-[border-color,box-shadow] duration-300 ease-out",
+      ].join(" ")}
+      aria-label={project.title}
     >
-      {/* Thumbnail */}
+      {/* ── Project image / thumbnail ───────────────────────────────────────── */}
       <div
-        className="relative h-44 flex items-center justify-center overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${gradient.from}, ${gradient.to})` }}
+        className="relative w-full aspect-[16/9] overflow-hidden flex-shrink-0"
+        style={{
+          background: `linear-gradient(135deg, ${project.gradient.from}, ${project.gradient.to})`,
+        }}
       >
-        {/* Dark overlay on hover */}
-        <div className="absolute inset-0 bg-brand-600/0 group-hover:bg-brand-600/5 dark:group-hover:bg-brand-400/5 transition-colors duration-300" />
+        {/*
+         * REPLACE imageUrl in /data/projects.ts with your actual screenshot path.
+         * e.g.  imageUrl: "/images/pandarawan.png"
+         * Place images in the /public/images/ folder.
+         *)
+        */}
+        <Image
+          src={project.imageUrl}
+          alt={`${project.title} screenshot`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          onError={(e) => {
+            // Gracefully hide broken images — the gradient background shows instead
+            (e.target as HTMLImageElement).style.display = "none";
+          }}
+        />
 
-        {/* Emoji icon */}
-        <span className="text-5xl select-none drop-shadow-sm relative z-10" role="img" aria-hidden="true">
-          {emoji}
-        </span>
-
-        {/* Year badge */}
-        <span className="absolute top-3 left-3 text-xs font-mono font-medium text-slate-500/70 bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm px-2 py-0.5 rounded-full border border-slate-200/40 dark:border-slate-700/40">
-          {year}
-        </span>
-
-        {/* Metric badge */}
-        {metric && (
-          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/40 shadow-sm">
-            <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{metric.value}</span>
-            <span className="text-xs text-slate-500 dark:text-slate-400">{metric.label}</span>
-          </div>
-        )}
-
-        {/* View Image Button - appears on hover */}
-        <motion.a
-          href={githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 flex items-center justify-center gap-2 bg-brand-600/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer z-20"
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileHover={{ scale: 1 }}
-          animate={{ opacity: 0 }}
-          whileInView={{ opacity: 0 }}
-          onHoverStart={() => {}}
+        {/* Emoji fallback — visible when image is loading or missing */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 flex items-center justify-center text-5xl opacity-30 select-none pointer-events-none"
         >
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ 
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-              delay: 0.05
-            }}
-            className="flex items-center gap-2 text-white font-medium"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path d="M2.5 12.5L7 8m0 0l4 4m-4-4v8a2 2 0 002 2h8a2 2 0 002-2v-4" />
-            </svg>
-            View Image
-          </motion.div>
-        </motion.a>
-      </div>
-
-      {/* Body */}
-      <div className="flex flex-col flex-1 p-5 gap-3">
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/70 dark:border-slate-700/50"
-            >
-              {tag}
-            </span>
-          ))}
+          {project.emoji}
         </div>
 
+        {/* Year chip — top-right corner */}
+        <span className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-md text-[0.68rem] font-bold tracking-widest bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm text-slate-500 dark:text-slate-400 border border-white/40 dark:border-slate-700/40">
+          {project.year}
+        </span>
+      </div>
+
+      {/* ── Card body ──────────────────────────────────────────────────────── */}
+      <div className="flex flex-col flex-1 p-5 gap-4">
+        {/* Metric badge */}
+        {project.metric && (
+          <MetricBadge value={project.metric.value} label={project.metric.label} />
+        )}
+
         {/* Title */}
-        <h3 className="font-display font-bold text-lg text-slate-900 dark:text-white leading-snug group-hover:text-brand-700 dark:group-hover:text-brand-300 transition-colors duration-200">
-          {title}
+        <h3 className="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug tracking-tight">
+          {project.title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed flex-1">
-          {description}
+        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+          {project.description}
         </p>
-      </div>
 
-      {/* Glow border effect on hover (overlay pseudo) */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ring-1 ring-brand-400/30 dark:ring-brand-500/30" />
+        {/* Tag pills */}
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {project.tags.map((tag) => (
+            <Tag key={tag} label={tag} />
+          ))}
+        </div>
+      </div>
     </motion.article>
   );
 }

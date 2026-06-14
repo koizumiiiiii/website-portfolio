@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -38,14 +38,7 @@ const CERTS: Cert[] = [
 // ─────────────────────────────────────────────────────────
 // Lightbox modal
 // ─────────────────────────────────────────────────────────
-function Lightbox({
-  cert,
-  onClose,
-}: {
-  cert: Cert;
-  onClose: () => void;
-}) {
-  // Close on Escape
+function Lightbox({ cert, onClose }: { cert: Cert; onClose: () => void }) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -54,10 +47,11 @@ function Lightbox({
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  // Prevent body scroll while modal open
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, []);
 
   return (
@@ -68,16 +62,16 @@ function Lightbox({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.22 }}
       className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-8"
-      // Close on backdrop click
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={`${cert.title} – enlarged view`}
     >
-      {/* Blurred dark backdrop */}
-      <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" aria-hidden="true" />
+      <div
+        className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+        aria-hidden="true"
+      />
 
-      {/* Image card – stop propagation so clicking the image doesn't close */}
       <motion.div
         key="lightbox-card"
         initial={{ opacity: 0, scale: 0.88, y: 16 }}
@@ -87,18 +81,23 @@ function Lightbox({
         className="relative z-10 w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl bg-slate-900"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           aria-label="Close lightbox"
           className="absolute top-3 right-3 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm transition-colors duration-150"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24" aria-hidden="true">
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path d="M18 6L6 18M6 6l12 12" />
           </svg>
         </button>
 
-        {/* Full-size image */}
         <div className="relative w-full aspect-[3/2]">
           <Image
             src={cert.src}
@@ -110,9 +109,10 @@ function Lightbox({
           />
         </div>
 
-        {/* Caption */}
         <div className="px-6 py-4 border-t border-slate-800">
-          <p className="font-display font-semibold text-white text-base">{cert.title}</p>
+          <p className="font-display font-semibold text-white text-base">
+            {cert.title}
+          </p>
           <p className="text-sm text-slate-400 mt-0.5">{cert.issuer}</p>
         </div>
       </motion.div>
@@ -121,18 +121,33 @@ function Lightbox({
 }
 
 // ─────────────────────────────────────────────────────────
-// Individual cert card
+// Stagger variants for cert cards
 // ─────────────────────────────────────────────────────────
 const cardVariants = {
-  hidden:  { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 28 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] },
+    transition: {
+      duration: 0.55,
+      delay: i * 0.12,
+      ease: [0.22, 1, 0.36, 1] as number[],
+    },
   }),
 };
 
-function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: () => void }) {
+// ─────────────────────────────────────────────────────────
+// Individual cert card
+// ─────────────────────────────────────────────────────────
+function CertCard({
+  cert,
+  index,
+  onOpen,
+}: {
+  cert: Cert;
+  index: number;
+  onOpen: () => void;
+}) {
   return (
     <motion.div
       custom={index}
@@ -146,23 +161,27 @@ function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: 
       role="button"
       tabIndex={0}
       aria-label={`View ${cert.title} – click to enlarge`}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onOpen();
+        }
+      }}
       className={[
         "group relative rounded-2xl overflow-hidden",
         "bg-white dark:bg-slate-900",
         "border border-slate-200/80 dark:border-slate-800/60",
         "shadow-card dark:shadow-card-dark",
-        // Hover glow (mirrors existing project-card-hover utility)
         "transition-all duration-300 ease-out",
         "hover:shadow-[0_20px_60px_rgba(58,103,255,0.15)] dark:hover:shadow-[0_20px_60px_rgba(93,138,255,0.2)]",
         "hover:border-brand-300/60 dark:hover:border-brand-700/60",
-        // Pointer hint
         "cursor-zoom-in",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/60",
       ].join(" ")}
     >
-      {/* Thumbnail */}
-      <div className="relative w-full aspect-[3/2] bg-slate-100 dark:bg-slate-800/50">
+      {/* ── Thumbnail ── */}
+      <div className="relative w-full aspect-[3/2] bg-slate-100 dark:bg-slate-800/50 overflow-hidden">
+        {/* Certificate image */}
         <Image
           src={cert.src}
           alt={cert.title}
@@ -171,13 +190,69 @@ function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: 
           className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
         />
 
-        {/* "View Image" overlay on hover */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <span className="text-white font-semibold text-sm">View Image</span>
+        {/*
+         * ── "View Image" hover overlay ──
+         *
+         * Root cause of the original bug:
+         *   1. No background on the overlay → text invisible against light images.
+         *   2. Zero-width space characters (<​span>) in the original source
+         *      caused JSX parse errors so the overlay never rendered at all.
+         *
+         * Fix:
+         *   • Full-coverage dark gradient (bottom-up) → text always readable.
+         *   • Frosted-glass pill badge with magnify icon.
+         *   • Pill slides up 12px + fades in via Tailwind group-hover utilities —
+         *     no extra Framer Motion needed (parent whileHover handles the card lift).
+         *)
+        */}
+        <div
+          aria-hidden="true"
+          className={[
+            "absolute inset-0",
+            // Dark gradient so white text is readable over any certificate image
+            "bg-gradient-to-t from-black/65 via-black/25 to-transparent",
+            // Fade the whole overlay in
+            "opacity-0 group-hover:opacity-100",
+            "transition-opacity duration-250 ease-out",
+            // Centre the pill
+            "flex items-center justify-center",
+          ].join(" ")}
+        >
+          {/* Frosted pill — slides up as it appears */}
+          <span
+            className={[
+              "inline-flex items-center gap-2",
+              "px-4 py-2 rounded-full",
+              // Frosted glass look
+              "bg-white/15 backdrop-blur-md",
+              "border border-white/30",
+              "text-white text-sm font-semibold tracking-wide",
+              // Entrance motion via group-hover (no JS timer needed)
+              "translate-y-3 group-hover:translate-y-0",
+              "opacity-0 group-hover:opacity-100",
+              "transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            ].join(" ")}
+          >
+            {/* Magnify icon */}
+            <svg
+              className="w-4 h-4 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.2}
+              strokeLinecap="round"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+              <path d="M11 8v6M8 11h6" />
+            </svg>
+            View Image
+          </span>
         </div>
       </div>
 
-      {/* Card footer */}
+      {/* ── Card footer ── */}
       <div className="px-5 py-4 space-y-2">
         <div>
           <p className="font-display font-semibold text-sm text-slate-800 dark:text-slate-100 truncate">
@@ -186,7 +261,12 @@ function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: 
           <p className="text-xs text-slate-500 dark:text-slate-400">{cert.issuer}</p>
         </div>
         <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 pt-1 border-t border-slate-200 dark:border-slate-700/50">
-          <svg className="w-3.5 h-3.5 text-brand-500/70" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg
+            className="w-3.5 h-3.5 text-brand-500/70"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.39-.48-1.03-.48-1.42 0-.39.48-.39 1.26 0 1.74l2 2.42c.39.48 1.03.48 1.42 0l4.15-5.16c.39-.48.39-1.26 0-1.74-.39-.48-1.03-.48-1.42 0z" />
           </svg>
           Completed: {cert.dateCompleted}
@@ -201,7 +281,7 @@ function CertCard({ cert, index, onOpen }: { cert: Cert; index: number; onOpen: 
 // ─────────────────────────────────────────────────────────
 export default function Certifications() {
   const [activeCert, setActiveCert] = useState<Cert | null>(null);
-  const openLightbox  = useCallback((cert: Cert) => setActiveCert(cert), []);
+  const openLightbox = useCallback((cert: Cert) => setActiveCert(cert), []);
   const closeLightbox = useCallback(() => setActiveCert(null), []);
 
   return (
@@ -223,8 +303,7 @@ export default function Certifications() {
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-
-          {/* ── Heading (same pattern as other sections) ── */}
+          {/* ── Heading (scroll-reveal, consistent with rest of site) ── */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -240,7 +319,8 @@ export default function Certifications() {
               Certifi<span className="gradient-text">cations</span>
             </h2>
             <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-              Credentials I&apos;ve earned — click any card to view the full certificate.
+              Credentials I&apos;ve earned — click any card to view the full
+              certificate.
             </p>
           </motion.div>
 
@@ -255,7 +335,6 @@ export default function Certifications() {
               />
             ))}
           </div>
-
         </div>
       </section>
 
