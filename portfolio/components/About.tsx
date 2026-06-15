@@ -47,7 +47,7 @@ function StatCard({
     <motion.div
       whileHover={{ y: -4, scale: 1.02 }}
       transition={{ duration: 0.2 }}
-      className="flex flex-col items-center justify-center p-5 rounded-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200/60 dark:border-slate-800/40 shadow-card dark:shadow-card-dark text-center"
+      className="flex flex-col items-center justify-center p-5 rounded-2xl bg-card/80 backdrop-blur-sm border border-slate-200/60 dark:border-slate-800/40 shadow-card dark:shadow-card-dark text-center"
     >
       <span className="font-display font-black text-3xl sm:text-4xl gradient-text leading-none mb-1">
         {isText ? textValue : `${count}${suffix}`}
@@ -116,12 +116,12 @@ export default function About() {
     <section
       id="about"
       aria-label="About Me"
-      className="relative py-24 sm:py-32"
+      className="relative py-20 sm:py-28"
     >
       {/* Section bg accent */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-slate-50/80 dark:bg-slate-950/50 pointer-events-none"
+        className="absolute inset-0 bg-surface/80 pointer-events-none"
       />
 
       <div ref={ref} className="relative z-10 max-w-6xl mx-auto px-6">
@@ -202,7 +202,7 @@ export default function About() {
                   CS Student · University of Mindanao
                 </p>
                 {/* Available for OJT pill */}
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium tracking-wide text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-950/60 border border-brand-200/60 dark:border-brand-800/40 px-2.5 py-1 rounded-full">
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-medium tracking-wide text-brand-500 dark:text-brand-400 bg-card border border-brand-200/60 dark:border-brand-800/40 px-2.5 py-1 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                   Available for OJT
                 </span>
@@ -231,9 +231,9 @@ export default function About() {
               
               {/* Education item 1 */}
               <motion.div
-                className="flex items-start gap-4 p-4 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/50"
+                className="flex items-start gap-4 p-4 rounded-xl bg-card border border-brand-200/40 dark:border-brand-800/40"
               >
-                <div className="w-8 h-8 rounded-lg bg-brand-500/10 dark:bg-brand-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-brand-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg className="w-4 h-4 text-brand-600 dark:text-brand-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path d="M12 3L2 8v4h20V8l-10-5z" />
                     <path d="M3 12h18v7c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-7z" />
@@ -249,7 +249,7 @@ export default function About() {
 
               {/* Education item 2 */}
               <motion.div
-                className="flex items-start gap-4 p-4 rounded-xl bg-slate-100/40 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50"
+                className="flex items-start gap-4 p-4 rounded-xl bg-card border border-slate-200/60 dark:border-slate-700/50"
               >
                 <div className="w-8 h-8 rounded-lg bg-slate-500/10 dark:bg-slate-400/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                   <svg className="w-4 h-4 text-slate-600 dark:text-slate-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">

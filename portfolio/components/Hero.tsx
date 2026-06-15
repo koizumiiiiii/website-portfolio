@@ -1,16 +1,31 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
 const ThreeHero = dynamic(() => import("./ThreeHero"), { ssr: false });
 
+function useBrandColor(shade = 500) {
+  const [color, setColor] = useState("58,103,255");
+  const update = useCallback(() => {
+    const rgb = getComputedStyle(document.documentElement)
+      .getPropertyValue(`--brand-${shade}`).trim();
+    if (rgb) setColor(rgb);
+  }, [shade]);
+  useEffect(() => {
+    update();
+    const obs = new MutationObserver(update);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] });
+    return () => obs.disconnect();
+  }, [update]);
+  return color;
+}
+
 const PHRASES = [
   "Building robust web apps",
   "Solving real problems",
-  "CS Student @ UM",
-  "Open for OJT",
+  "CS Student @ University of Mindanao",
 ];
 
 function Typewriter() {
@@ -64,6 +79,7 @@ const itemVariants = {
 };
 
 export default function Hero() {
+  const brandColor = useBrandColor(500);
   return (
     <section
       id="home"
@@ -81,7 +97,7 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(58,103,255,0.08) 0%, transparent 70%)",
+          background: `radial-gradient(circle, rgba(${brandColor},0.08) 0%, transparent 70%)`,
         }}
       />
 
@@ -95,14 +111,6 @@ export default function Hero() {
             animate="visible"
             className="space-y-6 lg:self-center lg:translate-x-3 lg:max-w-[36rem] xl:max-w-[40rem]"
           >
-            {/* Label */}
-            <motion.div variants={itemVariants}>
-              <span className="section-label">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-500 dark:bg-brand-400 animate-pulse" />
-                Available for OJT
-              </span>
-            </motion.div>
-
             {/* Greeting + Name */}
             <motion.div variants={itemVariants} className="space-y-1">
               <p className="text-slate-500 dark:text-slate-400 font-medium text-lg">Hi, I&apos;m</p>
@@ -154,17 +162,7 @@ export default function Hero() {
                 </svg>
                 Contact Me
               </a>
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-all duration-200 hover:-translate-y-0.5"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 0-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Resume
-              </a>
+
             </motion.div>
 
             {/* Social icons */}
@@ -219,7 +217,7 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200/80 dark:border-slate-700/60 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:border-brand-300 dark:hover:border-brand-700 hover:bg-brand-50 dark:hover:bg-brand-950/40 transition-all duration-200"
+                  className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200/80 dark:border-slate-700/60 text-slate-500 dark:text-slate-400 hover:text-brand-500 hover:border-brand-300 dark:hover:border-brand-700 hover:bg-card transition-all duration-200"
                 >
                   {icon}
                 </a>
@@ -239,7 +237,7 @@ export default function Hero() {
               aria-hidden="true"
               className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full animate-spin-slow pointer-events-none"
               style={{
-                background: "conic-gradient(from 0deg, rgba(58,103,255,0.12), rgba(139,92,246,0.08), rgba(58,103,255,0.12))",
+                background: `conic-gradient(from 0deg, rgba(${brandColor},0.12), rgba(${brandColor},0.05), rgba(${brandColor},0.12))`,
                 filter: "blur(1px)",
               }}
             />
@@ -251,27 +249,19 @@ export default function Hero() {
             />
             <div
               aria-hidden="true"
-              className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full border border-accent-400/15 dark:border-accent-400/20"
+              className="absolute w-56 h-56 sm:w-72 sm:h-72 rounded-full border border-brand-400/15 dark:border-brand-400/20"
             />
 
             {/* Canvas wrapper */}
             <div className="relative z-10 w-52 h-52 sm:w-64 sm:h-64 lg:w-76 lg:h-76 xl:w-80 xl:h-80 animate-float">
               {/* Backdrop blur card */}
-              <div className="absolute inset-0 rounded-3xl bg-white/30 dark:bg-slate-900/30 backdrop-blur-sm border border-white/40 dark:border-slate-700/30 shadow-card dark:shadow-card-dark" />
+              <div className="absolute inset-0 rounded-3xl bg-card/40 backdrop-blur-sm border border-slate-200/40 dark:border-slate-700/30 shadow-card dark:shadow-card-dark" />
               <div className="relative z-10 w-full h-full p-4 flex items-center justify-center">
                 <ThreeHero />
               </div>
             </div>
 
-            {/* Year decoration */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.1, duration: 0.5 }}
-              className="absolute -top-2 right-2 sm:-top-3 sm:right-3 px-3 py-1.5 rounded-full bg-brand-600/10 dark:bg-brand-400/10 border border-brand-200/50 dark:border-brand-800/50 text-xs font-mono font-medium text-brand-600 dark:text-brand-400 shadow-sm"
-            >
-              2026
-            </motion.div>
+
           </motion.div>
 
         </div>
@@ -281,7 +271,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.6 }}
-          className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none md:bottom-4"
+          className="absolute -bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10 pointer-events-none md:-bottom-32"
         >
           <span className="text-xs text-slate-400 dark:text-slate-600 tracking-widest uppercase font-mono">Scroll</span>
           <div className="w-5 h-8 rounded-full border border-slate-300 dark:border-slate-700 flex justify-center pt-1.5">

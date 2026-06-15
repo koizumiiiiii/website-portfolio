@@ -25,16 +25,22 @@ export default function ThreeHero() {
       renderer.setSize(420, 420);
       renderer.setClearColor(0x000000, 0);
 
+      // Helper: read a CSS brand-* variable as a Three.js color number
+      const getBrand = (shade: number): number => {
+        const rgb = getComputedStyle(document.documentElement)
+          .getPropertyValue(`--brand-${shade}`).trim();
+        if (!rgb) return 0x3b82f6;
+        const [r, g, b] = rgb.split(" ").map(Number);
+        return (r << 16) | (g << 8) | b;
+      };
+
       // Icosahedron geometry
       const geo    = new THREE.IcosahedronGeometry(1.05, 0);
       const edges  = new THREE.EdgesGeometry(geo);
 
       // Wireframe lines
-      const isDark = document.documentElement.classList.contains("dark");
-      const wireColor = isDark ? 0x5d8aff : 0x1d47f5;
-
       const lineMat = new THREE.LineBasicMaterial({
-        color: wireColor,
+        color: getBrand(500),
         transparent: true,
         opacity: 0.7,
       });
@@ -43,9 +49,9 @@ export default function ThreeHero() {
 
       // Glowing faces (subtle fill)
       const meshMat = new THREE.MeshBasicMaterial({
-        color: isDark ? 0x1535e1 : 0x3a67ff,
+        color: getBrand(500),
         transparent: true,
-        opacity: isDark ? 0.06 : 0.04,
+        opacity: 0.04,
         side: THREE.DoubleSide,
       });
       const mesh = new THREE.Mesh(geo, meshMat);
@@ -55,26 +61,25 @@ export default function ThreeHero() {
       const innerGeo   = new THREE.IcosahedronGeometry(0.65, 0);
       const innerEdges = new THREE.EdgesGeometry(innerGeo);
       const innerMat   = new THREE.LineBasicMaterial({
-        color: isDark ? 0xa78bfa : 0x7c3aed,
+        color: getBrand(400),
         transparent: true,
         opacity: 0.35,
       });
       const innerWire = new THREE.LineSegments(innerEdges, innerMat);
       scene.add(innerWire);
 
-      // Ambient point lights (subtle glow effect via vertex colors)
-      const light1 = new THREE.PointLight(0x3a67ff, 2, 10);
+      // Ambient point lights (subtle glow effect)
+      const light1 = new THREE.PointLight(getBrand(500), 2, 10);
       light1.position.set(3, 3, 3);
       scene.add(light1);
 
       // Update colors when theme changes
       const observer = new MutationObserver(() => {
-        const dark = document.documentElement.classList.contains("dark");
-        lineMat.color.set(dark ? 0x5d8aff : 0x1d47f5);
-        meshMat.color.set(dark ? 0x1535e1 : 0x3a67ff);
-        innerMat.color.set(dark ? 0xa78bfa : 0x7c3aed);
+        lineMat.color.set(getBrand(500));
+        meshMat.color.set(getBrand(500));
+        innerMat.color.set(getBrand(400));
       });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] });
 
       let time = 0;
       const animate = () => {

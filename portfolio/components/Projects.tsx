@@ -9,7 +9,7 @@ export default function Projects() {
     <section
       id="projects"
       aria-label="Featured Projects"
-      className="relative py-24 sm:py-32"
+      className="relative py-20 sm:py-28"
     >
       {/* Subtle grid background */}
       <div

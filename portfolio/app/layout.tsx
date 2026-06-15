@@ -6,19 +6,13 @@ export const metadata: Metadata = {
   description:
     "CS Student at UM | Building robust web apps, solving real problems. Open for OJT opportunities.",
   keywords: [
-    "James Oliver Mendoza",
-    "portfolio",
-    "web developer",
-    "CS student",
-    "Next.js",
-    "React",
-    "Philippines",
+    "James Oliver Mendoza", "portfolio", "web developer",
+    "CS student", "Next.js", "React", "Philippines",
   ],
   authors: [{ name: "James Oliver Mendoza" }],
   creator: "James Oliver Mendoza",
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    type: "website", locale: "en_US",
     title: "James Oliver Mendoza — Portfolio",
     description: "CS Student at UM | Building robust web apps & solving real problems.",
     siteName: "James Oliver Mendoza",
@@ -38,14 +32,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
+                  var theme = localStorage.getItem('theme') || 'neutral';
+                  var mode = localStorage.getItem('mode');
+                  var root = document.documentElement;
+                  root.setAttribute('data-theme', theme);
+                  if (mode === 'dark' || (!mode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    root.classList.add('dark');
                   }
                 } catch(e) {}
               })();
@@ -53,7 +51,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-surface-light dark:bg-surface-dark text-slate-900 dark:text-slate-100 font-body overflow-x-hidden">
+      <body className="bg-surface text-slate-900 dark:text-slate-100 font-body overflow-x-hidden">
         {children}
       </body>
     </html>

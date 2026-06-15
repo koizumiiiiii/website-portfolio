@@ -2,19 +2,43 @@
 
 import { useEffect, useRef, useState } from "react";
 
+function getBrand(shade = 500): string {
+  if (typeof window === "undefined") return "59,130,246";
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(`--brand-${shade}`).trim() || "59,130,246";
+}
+
 export default function CustomCursor() {
   const dotRef  = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   const mouse   = useRef({ x: -100, y: -100 });
-  const ring    = useRef({ x: -100, y: -100 });
+  const ringPos = useRef({ x: -100, y: -100 });
   const rafRef  = useRef<number>(0);
 
-  const [clicking,  setClicking]  = useState(false);
-  const [hovering,  setHovering]  = useState(false);
-  const [hidden,    setHidden]    = useState(false);
+  const [clicking, setClicking] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [hidden,   setHidden]   = useState(false);
 
+  const [isTouch, setIsTouch] = useState(false);
+  const [brand,   setBrand]   = useState("59,130,246");
+
+  // Detect touch device + read brand color
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      setIsTouch(true);
+      return;
+    }
+    setBrand(getBrand(500));
+    const obs = new MutationObserver(() => setBrand(getBrand(500)));
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ["class", "data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+
+  // Mouse event listeners
+  useEffect(() => {
+    if (isTouch) return;
+
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
     const onMove = (e: MouseEvent) => {
@@ -22,7 +46,6 @@ export default function CustomCursor() {
       mouse.current.y = e.clientY;
       setHidden(false);
     };
-
     const onLeave  = () => setHidden(true);
     const onEnter  = () => setHidden(false);
     const onDown   = () => setClicking(true);
@@ -50,8 +73,8 @@ export default function CustomCursor() {
     document.addEventListener("mouseout",    onHoverOut);
 
     const animate = () => {
-      ring.current.x = lerp(ring.current.x, mouse.current.x, 0.12);
-      ring.current.y = lerp(ring.current.y, mouse.current.y, 0.12);
+      ringPos.current.x = lerp(ringPos.current.x, mouse.current.x, 0.1);
+      ringPos.current.y = lerp(ringPos.current.y, mouse.current.y, 0.1);
 
       if (dotRef.current) {
         dotRef.current.style.transform =
@@ -59,7 +82,7 @@ export default function CustomCursor() {
       }
       if (ringRef.current) {
         ringRef.current.style.transform =
-          `translate(${ring.current.x}px, ${ring.current.y}px) translate(-50%, -50%)`;
+          `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%)`;
       }
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -75,7 +98,9 @@ export default function CustomCursor() {
       document.removeEventListener("mouseover",   onHoverIn);
       document.removeEventListener("mouseout",    onHoverOut);
     };
-  }, []);
+  }, [isTouch]);
+
+  if (isTouch) return null;
 
   return (
     <>
@@ -83,14 +108,14 @@ export default function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full will-change-transform transition-opacity duration-300"
+        className="fixed top-0 left-0 pointer-events-none z-[99999] rounded-full will-change-transform"
         style={{
-          width: clicking ? "6px" : "8px",
-          height: clicking ? "6px" : "8px",
-          backgroundColor: hovering ? "rgb(58,103,255)" : "rgb(58,103,255)",
+          width: clicking ? "3px" : "5px",
+          height: clicking ? "3px" : "5px",
+          backgroundColor: `rgb(${brand})`,
           opacity: hidden ? 0 : 1,
           transition: "width 0.15s, height 0.15s, opacity 0.3s",
-          boxShadow: hovering ? "0 0 10px rgba(58,103,255,0.8)" : "none",
+          boxShadow: `0 0 6px rgba(${brand},0.5)`,
         }}
       />
 
@@ -98,30 +123,26 @@ export default function CustomCursor() {
       <div
         ref={ringRef}
         aria-hidden="true"
-        className="fixed top-0 left-0 pointer-events-none z-[99998] rounded-full border will-change-transform"
+        className="fixed top-0 left-0 pointer-events-none z-[99998] rounded-full will-change-transform"
         style={{
-          width:  hovering ? "56px" : clicking ? "28px" : "36px",
-          height: hovering ? "56px" : clicking ? "28px" : "36px",
-          borderWidth: "1.5px",
-          borderColor: hovering
-            ? "rgba(58,103,255,0.8)"
-            : clicking
-            ? "rgba(58,103,255,0.6)"
-            : "rgba(58,103,255,0.4)",
+          width:  hovering ? "56px" : clicking ? "28px" : "40px",
+          height: hovering ? "56px" : clicking ? "28px" : "40px",
+          border: `1px solid rgba(${brand},${hovering ? 0.7 : clicking ? 0.5 : 0.3})`,
           opacity: hidden ? 0 : 1,
-          backgroundColor: hovering ? "rgba(58,103,255,0.08)" : "transparent",
-          transition: "width 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s, opacity 0.3s, background-color 0.2s",
+          backgroundColor: hovering ? `rgba(${brand},0.06)` : "transparent",
+          transition: "width 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), height 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s, background-color 0.2s",
         }}
       />
 
-      {/* Click pulse ring */}
+      {/* Click pulse */}
       {clicking && (
         <div
           aria-hidden="true"
-          className="fixed top-0 left-0 pointer-events-none z-[99997] rounded-full border border-brand-400/40 animate-pulse-ring"
+          className="fixed top-0 left-0 pointer-events-none z-[99997] rounded-full animate-pulse-ring"
           style={{
-            width: "36px",
-            height: "36px",
+            width: "40px",
+            height: "40px",
+            border: `1px solid rgba(${brand},0.4)`,
             transform: `translate(${mouse.current.x}px, ${mouse.current.y}px) translate(-50%, -50%)`,
           }}
         />

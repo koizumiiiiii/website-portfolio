@@ -169,7 +169,7 @@ function CertCard({
       }}
       className={[
         "group relative rounded-2xl overflow-hidden",
-        "bg-white dark:bg-slate-900",
+        "bg-card",
         "border border-slate-200/80 dark:border-slate-800/60",
         "shadow-card dark:shadow-card-dark",
         "transition-all duration-300 ease-out",
@@ -180,7 +180,7 @@ function CertCard({
       ].join(" ")}
     >
       {/* ── Thumbnail ── */}
-      <div className="relative w-full aspect-[3/2] bg-slate-100 dark:bg-slate-800/50 overflow-hidden">
+      <div className="relative w-full aspect-[3/2] bg-surface overflow-hidden">
         {/* Certificate image */}
         <Image
           src={cert.src}
@@ -289,7 +289,7 @@ export default function Certifications() {
       <section
         id="certifications"
         aria-label="Certifications"
-        className="relative py-24 sm:py-32"
+        className="relative py-20 sm:py-28"
       >
         {/* Subtle grid bg (same as Projects section) */}
         <div

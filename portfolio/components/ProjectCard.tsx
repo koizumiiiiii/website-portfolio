@@ -23,7 +23,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         ease: [0.22, 1, 0.36, 1],
       }}
       aria-label={title}
-      className="group relative flex flex-col rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/60 overflow-hidden project-card-hover"
+      className="group relative flex flex-col rounded-2xl bg-card border border-slate-200/80 dark:border-slate-800/60 overflow-hidden project-card-hover"
     >
       {/* ── Screenshot thumbnail ── */}
       <div
@@ -51,7 +51,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200/70 dark:border-slate-700/50"
+              className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-card text-slate-500 dark:text-slate-400 border border-slate-200/70 dark:border-slate-700/50"
             >
               {tag}
             </span>

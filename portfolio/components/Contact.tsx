@@ -26,7 +26,7 @@ const CONTACT_INFO = [
     ),
     label: "Email",
     value: "mendozajames992@gmail.com",
-    href:  "mailto:mendozajames992@gmail.com",
+    href:  "https://mail.google.com/mail/?view=cm&fs=1&to=mendozajames992@gmail.com",
   },
   {
     icon: (
@@ -124,10 +124,10 @@ export default function Contact() {
     <section
       id="contact"
       aria-label="Contact"
-      className="relative py-24 sm:py-32"
+      className="relative py-20 sm:py-28"
     >
       {/* BG tint */}
-      <div aria-hidden="true" className="absolute inset-0 bg-slate-50/80 dark:bg-slate-950/50 pointer-events-none" />
+      <div aria-hidden="true" className="absolute inset-0 bg-surface/80 pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         {/* Heading */}
@@ -173,9 +173,9 @@ export default function Contact() {
                     href={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
                     rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-4 p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/60 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-sm transition-all duration-200"
+                    className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-slate-200/80 dark:border-slate-800/60 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-sm transition-all duration-200"
                   >
-                    <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
+                    <div className="w-9 h-9 flex items-center justify-center rounded-lg bg-brand-500/10 text-brand-500 group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
                       {icon}
                     </div>
                     <div className="min-w-0">
@@ -202,7 +202,7 @@ export default function Contact() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           >
             <div
-              className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/60 shadow-card dark:shadow-card-dark space-y-5"
+              className="p-6 sm:p-8 rounded-2xl bg-card border border-slate-200/80 dark:border-slate-800/60 shadow-card dark:shadow-card-dark space-y-5"
               role="form"
               aria-label="Contact form"
             >
@@ -297,7 +297,7 @@ export default function Contact() {
                 onClick={handleSubmit}
                 disabled={sending || success}
                 type="button"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm shadow-glow-sm hover:shadow-glow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-sm hover:shadow-glow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
               >
                 {sending ? (
                   <>
