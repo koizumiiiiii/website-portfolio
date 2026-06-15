@@ -35,7 +35,7 @@ export const projects: Project[] = [
     id: 3,
     title: "Paopals",
     description:
-      "A social campus app for University of Mindanao students — find study buddies, form groups, and coordinate meetups.",
+      "A secure, web-based food ordering and management platform built to streamline operations for local small and medium enterprises covering automated customer ordering, order fulfillment tracking, inventory management, and robust role-based security controls.",
     longDescription:
       "React + Next.js frontend with a Node.js backend. Real-time messaging, interest-based matching, and event scheduling built for the UM community.",
     tags: ["React", "Next.js", "Node.js", "TypeScript"],
