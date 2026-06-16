@@ -171,7 +171,7 @@ export default function Hero() {
               <div className="flex-1 h-px bg-slate-200 dark:bg-slate-800" />
               {[
                 {
-                  href:  "https://linkedin.com/in/dranreb-jay-arzadon-593189414",
+                  href:  "https://www.linkedin.com/in/james-mendoza-480903414",
                   label: "LinkedIn",
                   icon:  (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
@@ -191,7 +191,7 @@ export default function Hero() {
                   ),
                 },
                 {
-                  href:  "https://facebook.com/dranrebjay.arzadon",
+                  href:  "https://www.facebook.com/jamesoliver.mendoza.7/",
                   label: "Facebook",
                   icon:  (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
@@ -200,7 +200,7 @@ export default function Hero() {
                   ),
                 },
                 {
-                  href:  "https://instagram.com/drnrbj",
+                  href:  "https://www.instagram.com/koizumiiii_",
                   label: "Instagram",
                   icon:  (
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
