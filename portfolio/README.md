@@ -1,5 +1,9 @@
 # James Oliver Mendoza — Personal Portfolio
 
+**Live site → [jamesoliver.vercel.app](https://jamesoliver.vercel.app)**
+
+Hey! Welcome to my portfolio's source code. I'm **James Oliver Mendoza**, a CS student at the **University of Mindanao** looking for **OJT / internship opportunities**. I love building clean, user-friendly web experiences — especially frontend development with modern JavaScript frameworks.
+
 Built with **Next.js 14 App Router · TypeScript · Tailwind CSS · Framer Motion · Three.js**
 
 ## Quick Start
@@ -22,8 +26,8 @@ vercel
 ### Option B — GitHub + Vercel Dashboard
 1. Push this repo to GitHub
 2. Go to [vercel.com/new](https://vercel.com/new)
-3. Import your repo → Vercel auto-detects Next.js
-4. Click **Deploy** — done ✅
+3. Import your repo — Vercel auto-detects Next.js
+4. Click **Deploy** — done
 
 ## Project Structure
 
@@ -37,49 +41,48 @@ components/
   Navbar.tsx        ← Sticky navbar, active-section highlight, theme toggle
   Hero.tsx          ← Hero with typewriter, Three.js icosahedron, CTAs
   ThreeHero.tsx     ← Three.js rotating icosahedron (client-only)
-  About.tsx         ← Bio, count-up stats, skills chips
+  About.tsx         ← Bio, education timeline, skills chips
   Projects.tsx      ← Projects grid section
-  ProjectCard.tsx   ← Individual project card (hover only effects)
+  ProjectCard.tsx   ← Individual project card
+  Certifications.tsx← Cert cards with lightbox modal
   Contact.tsx       ← Contact info + validated form + confetti
   Footer.tsx        ← Footer with back-to-top
   CustomCursor.tsx  ← Dot + ring cursor with lerp & click pulse
   ParticleCanvas.tsx← Background particles canvas
 
 hooks/
-  useThemeToggle.ts ← Dark/light mode persisted to localStorage
+  useThemeToggle.ts ← Dark/light mode + 5 theme colors persisted to localStorage
 
 data/
-  projects.ts       ← All 5 project definitions
-
-public/
-  (add photo.jpg here when ready, then update ThreeHero.tsx)
-```
-
-## Adding Your Photo
-
-1. Drop `photo.jpg` into `public/`
-2. In `components/ThreeHero.tsx`, replace the `<canvas>` with:
-```tsx
-import Image from "next/image";
-// ...
-<Image src="/photo.jpg" alt="Dranreb Jay Arzadon" fill className="object-cover rounded-2xl" />
+  projects.ts       ← 4 project definitions
 ```
 
 ## Customization
 
-- **Projects** → edit `data/projects.ts`
-- **Bio text** → edit `components/Hero.tsx` and `components/About.tsx`
-- **Colors** → edit `tailwind.config.js` (brand/accent palette)
-- **Contact form** → wire up real API in `components/Contact.tsx` `handleSubmit`
+- **Projects** — edit `data/projects.ts`
+- **Bio text** — edit `components/Hero.tsx` and `components/About.tsx`
+- **Colors** — edit `tailwind.config.js` (brand/accent palette) and `app/globals.css` (theme variable maps)
+- **Contact form** — sign up at [formspree.io](https://formspree.io), create a form, then paste your form ID into `components/Contact.tsx:114`
+- **Certifications** — edit `components/Certifications.tsx`
 
 ## Tech Stack
 
 | Layer         | Technology                    |
 |---------------|-------------------------------|
 | Framework     | Next.js 14 (App Router)       |
-| Language      | TypeScript (strict, no `any`) |
+| Language      | TypeScript (strict)           |
 | Styling       | Tailwind CSS v3               |
 | Animation     | Framer Motion v11             |
 | 3D            | Three.js r166                 |
 | Confetti      | canvas-confetti               |
 | Deployment    | Vercel                        |
+
+---
+
+**James Oliver Mendoza** — CS Student @ University of Mindanao  
+📧 mendozajames992@gmail.com  
+🔗 [linkedin.com/in/james-mendoza-480903414](https://www.linkedin.com/in/james-mendoza-480903414)  
+🐙 [github.com/koizumiiiiii](https://github.com/koizumiiiiii)  
+🌐 [jamesoliver.vercel.app](https://jamesoliver.vercel.app)
+
+*Open for OJT / internship opportunities — let's build something great together!*

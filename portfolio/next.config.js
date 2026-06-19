@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   images: {
     domains: ["placehold.co"],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 750, 1080],
   },
 };
 

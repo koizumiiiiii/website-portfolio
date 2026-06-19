@@ -181,12 +181,11 @@ export default function About() {
                     "border border-brand-300/30 dark:border-brand-600/30",
                   ].join(" ")}
                 >
-                  {/* REPLACE WITH YOUR ACTUAL PROFILE PHOTO URL */}
                   <Image
-                    src="/profile.jpg"
+                    src="/Images/profile.jpg"
                     alt="James Oliver Mendoza – profile photo"
                     fill
-                    sizes="350px"
+                    sizes="(max-width: 640px) 90vw, 350px"
                     className="object-cover"
                     priority
                   />

@@ -16,7 +16,7 @@ export const projects: Project[] = [
       "A full-stack web application for managing rental properties, tenant records, lease agreements, and payment tracking in one place.",
     longDescription:
       "Built with Laravel and MySQL. Streamlines day-to-day landlord operations — tenant onboarding, rent collection reminders, lease document management, and occupancy analytics.",
-    tags: ["PHP", "Laravel", "MySQL", "Blade"],
+    tags: ["Figma", "HTML", "TypeScript", "PHP", "MySQL", "Tailwind CSS"],
     image: "/Images/Pandarawan Rental and Tenant Management System.png",
     gradient: { from: "#EFF6FF", to: "#EDE9FE" },
   },
@@ -27,7 +27,7 @@ export const projects: Project[] = [
       "A machine learning system that analyses network traffic patterns to detect and classify malware activity in real time.",
     longDescription:
       "Uses scikit-learn classifiers trained on labelled network flow datasets. Features threat classification, visual dashboards, and per-connection risk scoring.",
-    tags: ["Python", "ML", "Scikit-learn", "Pandas"],
+    tags: ["scikit-learn", "Pandas", "NumPy"],
     image: "/Images/NetworkMalwareDetection.png",
     gradient: { from: "#ECFDF5", to: "#F0FDF4" },
   },
@@ -38,7 +38,7 @@ export const projects: Project[] = [
       "A secure, web-based food ordering and management platform built to streamline operations for local small and medium enterprises covering automated customer ordering, order fulfillment tracking, inventory management, and robust role-based security controls.",
     longDescription:
       "React + Next.js frontend with a Node.js backend. Real-time messaging, interest-based matching, and event scheduling built for the UM community.",
-    tags: ["React", "Next.js", "Node.js", "TypeScript"],
+    tags: ["Figma", "HTML", "PHP", "Laravel", "Tailwind CSS"],
     image: "/Images/Paopals.png",
     gradient: { from: "#FFF7ED", to: "#FFFBEB" },
   },
@@ -49,7 +49,7 @@ export const projects: Project[] = [
       "A game discovery and collection tracker — browse, wishlist, and rate titles across platforms with a clean, fast UI.",
     longDescription:
       "Pulls data from the RAWG API. Features filtering by genre/platform, personal wishlists, and a rating system backed by a lightweight SQLite store.",
-    tags: ["React", "TypeScript", "RAWG API", "Tailwind"],
+    tags: ["Figma", "HTML", "VanillaJS", "PHP", "Tailwind CSS"],
     image: "/Images/GameForge.png",
     gradient: { from: "#F5F3FF", to: "#EDE9FE" },
   },

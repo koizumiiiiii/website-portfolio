@@ -105,12 +105,21 @@ export default function Contact() {
   const handleSubmit = async () => {
     if (!validate()) return;
     setSending(true);
-    // Simulate async send (replace with real API call)
-    await new Promise((r) => setTimeout(r, 1200));
-    setSending(false);
-    setSuccess(true);
-    launchConfetti();
-    setForm({ name: "", email: "", subject: "", message: "" });
+    try {
+      const res = await fetch("https://formspree.io/f/mpqegend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, subject: form.subject, message: form.message }),
+      });
+      if (!res.ok) throw new Error("Failed to send. Try again later.");
+      setSending(false);
+      setSuccess(true);
+      launchConfetti();
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch {
+      setSending(false);
+      alert("Something went wrong. Please email me directly at mendozajames992@gmail.com");
+    }
   };
 
   const inputClass = (err?: string) =>

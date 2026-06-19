@@ -40,8 +40,8 @@ export default function Projects() {
             Featured <span className="gradient-text">Projects</span>
           </h2>
           <p className="mt-4 text-slate-500 dark:text-slate-400 text-lg leading-relaxed">
-            A selection of things I&apos;ve built — web apps, machine learning systems,
-            and tools with real users behind them.
+            Projects I&apos;ve built and contributed to — web apps, machine learning
+            systems, and tools I&apos;m proud of.
           </p>
         </motion.div>
 
