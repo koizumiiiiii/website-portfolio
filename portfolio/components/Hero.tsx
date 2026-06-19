@@ -134,10 +134,11 @@ export default function Hero() {
               variants={itemVariants}
               className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-lg"
             >
-              I&apos;m a CS student who loves turning ideas into code. I&apos;ve built a few{" "}
-              <span className="text-slate-900 dark:text-slate-200 font-medium">full&#8209;stack apps</span>,{" "}
-              started exploring machine learning, and always try to learn by doing. Outside
-              the laptop, I hike and play guitar. Right now I&apos;m looking for an OJT where I can{" "}
+              I&apos;m a CS student passionate about{" "}
+              <span className="text-slate-900 dark:text-slate-200 font-medium">frontend development</span>{" "}
+              — building responsive, user-friendly interfaces and turning ideas into working code.
+              I&apos;ve also explored full-stack apps and machine learning, and I&apos;m always learning by doing.
+              I&apos;m looking for an OJT where I can{" "}
               <span className="text-brand-600 dark:text-brand-400 font-medium">contribute, learn from a team, and ship real features</span>.
             </motion.p>
 
