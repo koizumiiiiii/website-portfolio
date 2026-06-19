@@ -93,15 +93,6 @@ export default function Contact() {
     return Object.keys(errs).length === 0;
   };
 
-  const launchConfetti = async () => {
-    try {
-      const confetti = (await import("canvas-confetti")).default;
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ["#3a67ff", "#a78bfa", "#5d8aff"] });
-    } catch {
-      // confetti not available
-    }
-  };
-
   const handleSubmit = async () => {
     if (!validate()) return;
     setSending(true);
@@ -114,7 +105,6 @@ export default function Contact() {
       if (!res.ok) throw new Error("Failed to send. Try again later.");
       setSending(false);
       setSuccess(true);
-      launchConfetti();
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch {
       setSending(false);
